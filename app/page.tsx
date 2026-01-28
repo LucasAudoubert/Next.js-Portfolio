@@ -1,7 +1,7 @@
 import Contenu from "@/components/contenu";
 import Image from "next/image";
 import clsx from "clsx";
-import { roboto400, roboto700 } from "@/fonts/fonts";
+import { clashDisplay } from "../fonts/fonts";
 
 export default function Home() {
   const hasError = false;
@@ -10,7 +10,7 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main
         className={clsx(
-          `${roboto700.className} flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 dark:bg-black sm:items-start`,
+          `font-sans flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 dark:bg-black sm:items-start`,
           {
             "bg-red-500": hasError,
             "bg-white": !hasError,
@@ -27,7 +27,7 @@ export default function Home() {
           priority
         />
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+          <h1 className={`font-sans max-w-xs leading-10 tracking-tight text-black dark:text-zinc-50`}>
             To get started, edit the page.tsx file.
           </h1>
           <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
