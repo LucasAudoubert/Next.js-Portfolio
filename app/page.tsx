@@ -1,79 +1,221 @@
-import Contenu from "@/components/contenu";
-import Image from "next/image";
-import clsx from "clsx";
-import { clashDisplay } from "../fonts/fonts";
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const hasError = false;
+  const heroRef = useRef(null);
+  const aboutRef = useRef(null);
+  const projectsRef = useRef(null);
+  const contactRef = useRef(null);
+
+  useEffect(() => {
+    // Hero animation
+    gsap.from(heroRef.current, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power3.out",
+    });
+
+    // About section animation
+    gsap.from(aboutRef.current, {
+      opacity: 0,
+      y: 100,
+      duration: 1,
+      scrollTrigger: {
+        trigger: aboutRef.current,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Projects animation
+    gsap.from(".project-card", {
+      opacity: 0,
+      y: 80,
+      stagger: 0.2,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: projectsRef.current,
+        start: "top 70%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Contact animation
+    gsap.from(contactRef.current, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 1,
+      scrollTrigger: {
+        trigger: contactRef.current,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
+      },
+    });
+  }, []);
+
+  const projects = [
+    {
+      title: "Next.js Portfolio",
+      description: "Portfolio moderne avec Next.js, TypeScript et Tailwind CSS",
+      tech: ["Next.js", "TypeScript", "Tailwind", "GSAP"],
+      github: "https://github.com/LucasAudoubert/Next.js-Portfolio",
+    },
+    {
+      title: "Projet E-commerce",
+      description: "Application e-commerce full-stack avec authentification",
+      tech: ["React", "Node.js", "MongoDB", "Express"],
+      github: "https://github.com/LucasAudoubert",
+    },
+    {
+      title: "Application Mobile",
+      description: "Application mobile cross-platform avec React Native",
+      tech: ["React Native", "Firebase", "Redux"],
+      github: "https://github.com/LucasAudoubert",
+    },
+  ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main
-        className={clsx(
-          `font-sans flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 dark:bg-black sm:items-start`,
-          {
-            "bg-red-500": hasError,
-            "bg-white": !hasError,
-          },
-        )}
+    <div className="min-h-screen bg-white dark:bg-zinc-950">
+      {/* Hero Section */}
+      <section
+        ref={heroRef}
+        className="flex min-h-screen items-center justify-center px-6 py-20"
       >
-        <Contenu texte="Contenu de la page d'accueil" />
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className={`font-sans max-w-xs leading-10 tracking-tight text-black dark:text-zinc-50`}>
-            To get started, edit the page.tsx file.
+        <div className="max-w-4xl text-center">
+          <h1 className="mb-6 text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 md:text-8xl">
+            Lucas Audoubert
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mb-8 text-xl text-zinc-600 dark:text-zinc-400 md:text-2xl">
+            Développeur Full-Stack & Créateur d'Expériences Web
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#projects"
+              className="rounded-full bg-zinc-900 px-8 py-4 font-semibold text-white transition-all hover:scale-105 hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              Voir mes projets
+            </a>
+            <a
+              href="https://github.com/LucasAudoubert"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border-2 border-zinc-900 px-8 py-4 font-semibold text-zinc-900 transition-all hover:scale-105 hover:bg-zinc-900 hover:text-white dark:border-zinc-50 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* About Section */}
+      <section ref={aboutRef} className="px-6 py-20" id="about">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-12 text-4xl font-bold text-zinc-900 dark:text-zinc-50 md:text-5xl">
+            À propos
+          </h2>
+          <div className="space-y-6 text-lg text-zinc-700 dark:text-zinc-300">
+            <p>
+              Passionné par le développement web et les technologies modernes,
+              je crée des applications performantes et élégantes qui offrent des
+              expériences utilisateur exceptionnelles.
+            </p>
+            <p>
+              Je maîtrise des technologies telles que <strong>Next.js</strong>,{" "}
+              <strong>React</strong>, <strong>TypeScript</strong>,{" "}
+              <strong>Node.js</strong>, et bien d'autres. J'aime relever de
+              nouveaux défis et apprendre continuellement.
+            </p>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Projects Section */}
+      <section
+        ref={projectsRef}
+        className="bg-zinc-50 px-6 py-20 dark:bg-zinc-900"
+        id="projects"
+      >
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-12 text-4xl font-bold text-zinc-900 dark:text-zinc-50 md:text-5xl">
+            Projets
+          </h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, index) => (
+              <div
+                key={index}
+                className="project-card group rounded-2xl bg-white p-8 shadow-lg transition-all hover:-translate-y-2 hover:shadow-xl dark:bg-zinc-800"
+              >
+                <h3 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+                  {project.title}
+                </h3>
+                <p className="mb-6 text-zinc-600 dark:text-zinc-400">
+                  {project.description}
+                </p>
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {project.tech.map((tech, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center font-semibold text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300"
+                >
+                  Voir sur GitHub →
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section ref={contactRef} className="px-6 py-20" id="contact">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="mb-8 text-4xl font-bold text-zinc-900 dark:text-zinc-50 md:text-5xl">
+            Contactez-moi
+          </h2>
+          <p className="mb-12 text-xl text-zinc-600 dark:text-zinc-400">
+            Un projet en tête ? N'hésitez pas à me contacter !
+          </p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="mailto:lucas.audoubert.dev@gmail.com"
+              className="rounded-full bg-zinc-900 px-8 py-4 font-semibold text-white transition-all hover:scale-105 hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              Envoyer un email
+            </a>
+            <a
+              href="https://github.com/LucasAudoubert"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border-2 border-zinc-900 px-8 py-4 font-semibold text-zinc-900 transition-all hover:scale-105 hover:bg-zinc-900 hover:text-white dark:border-zinc-50 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-200 bg-zinc-50 px-6 py-8 dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="mx-auto max-w-6xl text-center text-zinc-600 dark:text-zinc-400">
+          <p>© 2026 Lucas Audoubert. Tous droits réservés.</p>
+        </div>
+      </footer>
     </div>
   );
 }
