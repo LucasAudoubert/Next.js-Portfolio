@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./style/top-section.scss";
+@import "./style/language-button.scss";
 
 @custom-variant dark (&:is(.dark *));
 
