@@ -110,10 +110,10 @@ export default function Home() {
           className="flex min-h-screen items-center justify-center px-6 py-20"
         >
           <div className="max-w-4xl text-center">
-            <h1 className="mb-6 text-6xl font-bold tracking-tight text-white drop-shadow-lg md:text-8xl">
+            <h1 className="mb-6 text-6xl font-bold tracking-tight text-mint drop-shadow-lg md:text-8xl">
               Lucas Audoubert
             </h1>
-            <p className="mb-8 text-xl text-white/90 drop-shadow-md md:text-2xl">
+            <p className="mb-8 rounded-2xl bg-white/10 px-6 py-4 text-xl text-white backdrop-blur-md drop-shadow-md md:text-2xl">
               Développeur Full-Stack & Créateur d'Expériences Web
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -132,12 +132,6 @@ export default function Home() {
                 GitHub
               </a>
             </div>
-          </div>
-
-          {/* Tech Stack Carousels */}
-          <div className="absolute bottom-32 left-0 right-0 space-y-6">
-            <TechCarousel direction="right" folder="prog_language" />
-            <TechCarousel direction="left" folder="tools" />
           </div>
         </section>
 
@@ -164,6 +158,11 @@ export default function Home() {
                 nouveaux défis et apprendre continuellement.
               </p>
             </div>
+          </div>
+          {/* Tech Stack Carousels */}
+          <div className="absolute bottom-32 left-0 right-0 space-y-6">
+            <TechCarousel direction="right" folder="prog_language" />
+            <TechCarousel direction="left" folder="tools" />
           </div>
         </section>
 
