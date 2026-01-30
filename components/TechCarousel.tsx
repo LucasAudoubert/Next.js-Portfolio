@@ -9,7 +9,7 @@ interface TechCarouselProps {
 }
 
 const progLanguages = [
-  "C#-(CSharp).png",
+  "C#.png",
   "CSS3.png",
   "Discord.js.png",
   "Express.png",
