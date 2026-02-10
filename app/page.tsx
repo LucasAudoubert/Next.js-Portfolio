@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ColorBends from "@/components/ColorBends";
 import TechCarousel from "@/components/TechCarousel";
+import TargetCursor from "@/components/TargetCursor";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -199,6 +200,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-zinc-900">
+      <TargetCursor />
       {/* Animated Background */}
       <div className="fixed inset-0 z-0 bg-[#1a1a1a]">
         <ColorBends
@@ -252,29 +254,33 @@ export default function Home() {
           className="relative flex min-h-screen items-center justify-center px-6 py-20"
         >
           <div className="max-w-4xl text-center">
-            <h1 className="mb-6 bg-gradient-to-r from-mint to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+            <h1 className="mb-6 bg-linear-to-r from-mint to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
               {t.title}
             </h1>
             <p className="mb-8 animate-fade-in-up rounded-2xl bg-white/10 px-6 py-4 text-xl text-white backdrop-blur-md drop-shadow-md md:text-2xl">
               {t.subtitle}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="#projects"
-                className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-zinc-900 shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
-              >
-                <span className="relative z-10">{t.viewProjects}</span>
-                <div className="absolute inset-0 -z-0 bg-gradient-to-r from-mint to-cyan-400 opacity-0 transition-opacity group-hover:opacity-20"></div>
-              </a>
-              <a
-                href="https://github.com/LucasAudoubert"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-full border-2 border-white bg-white/10 px-8 py-4 font-semibold text-white shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:border-mint hover:bg-white hover:text-zinc-900"
-              >
-                <span className="relative z-10">{t.github}</span>
-                <div className="absolute inset-0 -z-0 bg-gradient-to-r from-mint to-cyan-400 opacity-0 transition-opacity group-hover:opacity-100"></div>
-              </a>
+              <div className="cursor-target">
+                <a
+                  href="#projects"
+                  className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-zinc-900 shadow-lg transition-all hover:scale-105 hover:shadow-2xl"
+                >
+                  <span className="relative z-10">{t.viewProjects}</span>
+                  <div className="absolute inset-0 z-0 bg-linear-to-r from-mint to-cyan-400 opacity-0 transition-opacity group-hover:opacity-20"></div>
+                </a>
+              </div>
+              <div className="cursor-target">
+                <a
+                  href="https://github.com/LucasAudoubert"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative overflow-hidden rounded-full border-2 border-white bg-white/10 px-8 py-4 font-semibold text-white shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:border-mint hover:bg-white hover:text-zinc-900"
+                >
+                  <span className="relative z-10">{t.github}</span>
+                  <div className="absolute inset-0 z-0 bg-linear-to-r from-mint to-cyan-400 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -294,7 +300,7 @@ export default function Home() {
         {/* About Section */}
         <section
           ref={aboutRef}
-          className="relative overflow-hidden bg-white/90 px-6 py-24 backdrop-blur-md dark:bg-zinc-950/90"
+          className="relative overflow-hidden px-6 py-24 backdrop-blur-md"
           id="about"
         >
           {/* Decorative elements */}
