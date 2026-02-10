@@ -14,7 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${clashDisplay.variable} antialiased`}>{children}</body>
+      <body
+        className={`${clashDisplay.variable} antialiased`}
+        suppressHydrationWarning
+      >
+        {children}
+      </body>
     </html>
   );
 }
