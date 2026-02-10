@@ -1,93 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ColorBends from "@/components/ColorBends";
-import TechCarousel from "@/components/TechCarousel";
+import ColorBends from "@/components/background/ColorBends";
 import TargetCursor from "@/components/TargetCursor";
+import LightRays from "@/components/background/LightRays";
+import { Separator } from "@/components/separator";
+import LogoLoop from "@/components/LogoLoop";
 import Image from "next/image";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const translations = {
-  fr: {
-    title: "Lucas Audoubert",
-    subtitle: "Développeur Full-Stack",
-    viewProjects: "Voir mes projets",
-    github: "GitHub",
-    about: "À propos",
-    aboutText1:
-      "Passionné par le développement web et les technologies modernes, je crée des applications performantes et élégantes qui offrent des expériences utilisateur exceptionnelles.",
-    aboutText2:
-      "Je maîtrise des technologies telles que Next.js, React, TypeScript, Node.js, et bien d'autres. J'aime relever de nouveaux défis et apprendre continuellement.",
-    projects: "Projets",
-    viewOnGithub: "Voir sur GitHub →",
-    contact: "Contactez-moi",
-    contactText: "Un projet en tête ? N'hésitez pas à me contacter !",
-    sendEmail: "Envoyer un email",
-    footer: "© 2026 Lucas Audoubert. Tous droits réservés.",
-    projectsData: [
-      {
-        title: "Next.js Portfolio",
-        description:
-          "Portfolio moderne avec Next.js, TypeScript et Tailwind CSS",
-        tech: ["Next.js", "TypeScript", "Tailwind", "GSAP"],
-        github: "https://github.com/LucasAudoubert/Next.js-Portfolio",
-      },
-      {
-        title: "Projet E-commerce",
-        description: "Application e-commerce full-stack avec authentification",
-        tech: ["React", "Node.js", "MongoDB", "Express"],
-        github: "https://github.com/LucasAudoubert",
-      },
-      {
-        title: "Application Mobile",
-        description: "Application mobile cross-platform avec React Native",
-        tech: ["React Native", "Firebase", "Redux"],
-        github: "https://github.com/LucasAudoubert",
-      },
-    ],
-  },
-  en: {
-    title: "Lucas Audoubert",
-    subtitle: "Full-Stack Developer",
-    viewProjects: "View my projects",
-    github: "GitHub",
-    about: "About",
-    aboutText1:
-      "Passionate about web development and modern technologies, I create high-performance and elegant applications that offer exceptional user experiences.",
-    aboutText2:
-      "I master technologies such as Next.js, React, TypeScript, Node.js, and many others. I love taking on new challenges and continuously learning.",
-    projects: "Projects",
-    viewOnGithub: "View on GitHub →",
-    contact: "Contact me",
-    contactText: "Have a project in mind? Feel free to reach out!",
-    sendEmail: "Send an email",
-    footer: "© 2026 Lucas Audoubert. All rights reserved.",
-    projectsData: [
-      {
-        title: "Next.js Portfolio",
-        description:
-          "Modern portfolio with Next.js, TypeScript and Tailwind CSS",
-        tech: ["Next.js", "TypeScript", "Tailwind", "GSAP"],
-        github: "https://github.com/LucasAudoubert/Next.js-Portfolio",
-      },
-      {
-        title: "E-commerce Project",
-        description: "Full-stack e-commerce application with authentication",
-        tech: ["React", "Node.js", "MongoDB", "Express"],
-        github: "https://github.com/LucasAudoubert",
-      },
-      {
-        title: "Mobile Application",
-        description: "Cross-platform mobile application with React Native",
-        tech: ["React Native", "Firebase", "Redux"],
-        github: "https://github.com/LucasAudoubert",
-      },
-    ],
-  },
-};
+import { translations } from "@/lib/translations";
+import { progLanguages, tools } from "@/lib/techStack";
+import { initializeAnimations } from "@/lib/animations";
 
 export default function Home() {
   const [language, setLanguage] = useState<"fr" | "en">("fr");
@@ -101,122 +23,37 @@ export default function Home() {
   const t = translations[language];
 
   const handleLanguageChange = () => {
-    // Animate flag exit
-    gsap.to(flagRef.current, {
-      rotationY: 90,
-      scale: 0.8,
-      duration: 0.3,
-      ease: "power2.in",
-      onComplete: () => {
-        // Change language
-        setLanguage(language === "fr" ? "en" : "fr");
-        // Animate flag entrance
-        gsap.fromTo(
-          flagRef.current,
-          { rotationY: -90, scale: 0.8 },
-          { rotationY: 0, scale: 1, duration: 0.3, ease: "power2.out" },
-        );
-      },
+    const animations = initializeAnimations();
+    animations.languageSwitchAnimation(flagRef, language, () => {
+      setLanguage(language === "fr" ? "en" : "fr");
     });
   };
 
   useEffect(() => {
+    const animations = initializeAnimations();
+
     // Hero animation with stagger
-    gsap.from(heroRef.current, {
-      opacity: 0,
-      y: 100,
-      duration: 1.2,
-      ease: "power3.out",
-    });
+    animations.heroAnimation(heroRef);
 
     // About section animation with slide-in
-    gsap.from(aboutRef.current, {
-      opacity: 0,
-      x: -100,
-      duration: 1,
-      scrollTrigger: {
-        trigger: aboutRef.current,
-        start: "top 75%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse",
-      },
-    });
+    animations.aboutAnimation(aboutRef);
 
     // Section titles animation
-    gsap.utils.toArray(".section-title").forEach((title: any) => {
-      gsap.from(title, {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: title,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      });
-    });
+    animations.sectionTitlesAnimation();
 
     // Projects animation with stagger and rotation
-    gsap.from(".project-card", {
-      opacity: 0,
-      y: 100,
-      rotationX: 15,
-      stagger: 0.15,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: projectsRef.current,
-        start: "top 70%",
-        toggleActions: "play none none reverse",
-      },
-    });
+    animations.projectsAnimation(projectsRef);
 
     // Tech carousel animation
-    gsap.from(".tech-carousel", {
-      opacity: 0,
-      scale: 0.9,
-      stagger: 0.2,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: techRef.current,
-        start: "top 80%",
-        toggleActions: "play none none reverse",
-      },
-    });
+    animations.techCarouselAnimation(techRef);
 
     // Contact animation with bounce
-    gsap.from(contactRef.current, {
-      opacity: 0,
-      scale: 0.8,
-      duration: 1,
-      ease: "back.out(1.4)",
-      scrollTrigger: {
-        trigger: contactRef.current,
-        start: "top 80%",
-        toggleActions: "play none none reverse",
-      },
-    });
+    animations.contactAnimation(contactRef);
   }, []);
 
   return (
     <div className="relative min-h-screen bg-zinc-900">
       <TargetCursor />
-      {/* Animated Background */}
-      <div className="fixed inset-0 z-0 bg-[#1a1a1a]">
-        <ColorBends
-          rotation={45}
-          speed={0.15}
-          colors={["#29ff9b", "#FF9FFC", "#66e0ff"]}
-          transparent
-          autoRotate={0}
-          scale={1}
-          frequency={1}
-          warpStrength={1}
-          mouseInfluence={1}
-          parallax={0.5}
-          noise={0.1}
-        />
-      </div>
 
       {/* Language Switch */}
       <div className="fixed left-6 top-6 z-50">
@@ -251,9 +88,26 @@ export default function Home() {
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="relative flex min-h-screen items-center justify-center px-6 py-20"
+          className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20 bg-[#1a1a1a]"
         >
-          <div className="max-w-4xl text-center">
+          {/* Animated Background for Hero Only */}
+          <div className="absolute inset-0 z-0">
+            <ColorBends
+              rotation={45}
+              speed={0.15}
+              colors={["#29ff9b", "#FF9FFC", "#66e0ff"]}
+              transparent
+              autoRotate={0}
+              scale={1}
+              frequency={1}
+              warpStrength={1}
+              mouseInfluence={1}
+              parallax={0.5}
+              noise={0.1}
+            />
+          </div>
+
+          <div className="max-w-4xl text-center relative z-10">
             <h1 className="mb-6 bg-linear-to-r from-mint to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
               {t.title}
             </h1>
@@ -270,6 +124,7 @@ export default function Home() {
                   <div className="absolute inset-0 z-0 bg-linear-to-r from-mint to-cyan-400 opacity-0 transition-opacity group-hover:opacity-20"></div>
                 </a>
               </div>
+
               <div className="cursor-target">
                 <a
                   href="https://github.com/LucasAudoubert"
@@ -292,10 +147,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section Separator */}
-        <div className="relative h-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-mint/10 to-transparent"></div>
-        </div>
+        <Separator />
 
         {/* About Section */}
         <section
@@ -303,11 +155,28 @@ export default function Home() {
           className="relative overflow-hidden px-6 py-24 backdrop-blur-md"
           id="about"
         >
+          {/* Light Rays Background */}
+          <div className="absolute inset-0 z-0">
+            <LightRays
+              raysOrigin="top-center"
+              raysColor="#29ff9b"
+              raysSpeed={0.8}
+              lightSpread={1.5}
+              rayLength={1.5}
+              pulsating={true}
+              fadeDistance={0.8}
+              saturation={0.9}
+              followMouse={true}
+              mouseInfluence={0.05}
+              noiseAmount={0.1}
+            />
+          </div>
+
           {/* Decorative elements */}
           <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-mint/5 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-400/5 blur-3xl"></div>
 
-          <div className="relative mx-auto max-w-4xl">
+          <div className="relative mx-auto max-w-4xl z-10">
             <h2 className="section-title mb-12 bg-gradient-to-r from-mint to-cyan-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
               {t.about}
             </h2>
@@ -318,10 +187,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section Separator */}
-        <div className="relative h-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent"></div>
-        </div>
+        <Separator />
 
         <section
           ref={techRef}
@@ -341,17 +207,81 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Tech Stack Carousels */}
-          <div className="w-full space-y-8">
-            <TechCarousel direction="right" folder="prog_language" />
-            <TechCarousel direction="left" folder="tools" />
+          {/* Tech Stack with LogoLoop */}
+          <div className="w-full space-y-12">
+            {/* Programming Languages */}
+            <div>
+              <h3 className="mb-6 text-center text-lg font-semibold text-zinc-700 dark:text-zinc-300">
+                {language === "fr"
+                  ? "Langages & Frameworks"
+                  : "Languages & Frameworks"}
+              </h3>
+              <LogoLoop
+                logos={progLanguages.map((fileName) => ({
+                  name: fileName.replace(".png", ""),
+                  path: `/tech_icons/prog_language/${fileName}`,
+                }))}
+                speed={120}
+                direction="left"
+                logoHeight={40}
+                gap={32}
+                fadeOut={true}
+                pauseOnHover={true}
+                renderItem={(logo) => (
+                  <div className="flex flex-shrink-0 items-center gap-2">
+                    <Image
+                      src={logo.path}
+                      alt={logo.name}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10"
+                    />
+                    <span className="whitespace-nowrap text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                      {logo.name}
+                    </span>
+                  </div>
+                )}
+              />
+            </div>
+
+            {/* Tools */}
+            <div>
+              <h3 className="mb-6 text-center text-lg font-semibold text-zinc-700 dark:text-zinc-300">
+                {language === "fr"
+                  ? "Outils & Technologies"
+                  : "Tools & Technologies"}
+              </h3>
+              <LogoLoop
+                logos={tools.map((fileName) => ({
+                  name: fileName.replace(".png", ""),
+                  path: `/tech_icons/tools/${fileName}`,
+                }))}
+                speed={120}
+                direction="right"
+                logoHeight={40}
+                gap={32}
+                fadeOut={true}
+                pauseOnHover={true}
+                renderItem={(logo) => (
+                  <div className="flex flex-shrink-0 items-center gap-2">
+                    <Image
+                      src={logo.path}
+                      alt={logo.name}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10"
+                    />
+                    <span className="whitespace-nowrap text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                      {logo.name}
+                    </span>
+                  </div>
+                )}
+              />
+            </div>
           </div>
         </section>
 
-        {/* Section Separator */}
-        <div className="relative h-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-mint/10 to-transparent"></div>
-        </div>
+        <Separator />
 
         {/* Projects Section */}
         <section
@@ -406,10 +336,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section Separator */}
-        <div className="relative h-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent"></div>
-        </div>
+        <Separator />
 
         {/* Contact Section */}
         <section
@@ -428,21 +355,23 @@ export default function Home() {
             <p className="mb-12 text-xl text-zinc-600 dark:text-zinc-400">
               {t.contactText}
             </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href="mailto:lucas.audoubert.dev@gmail.com"
-                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-mint to-cyan-400 px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              >
-                <span className="relative z-10">{t.sendEmail}</span>
-              </a>
-              <a
-                href="https://github.com/LucasAudoubert"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border-2 border-zinc-300 px-8 py-4 font-semibold text-zinc-900 transition-all duration-300 hover:scale-105 hover:border-mint hover:bg-mint/10 dark:border-zinc-700 dark:text-zinc-50 dark:hover:border-mint"
-              >
-                {t.github}
-              </a>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a
+                  href="mailto:lucas.audoubert.dev@gmail.com"
+                  className="group relative overflow-hidden rounded-full bg-gradient-to-r from-mint to-cyan-400 px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  <span className="relative z-10">{t.sendEmail}</span>
+                </a>
+                <a
+                  href="https://github.com/LucasAudoubert"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border-2 border-zinc-300 px-8 py-4 font-semibold text-zinc-900 transition-all duration-300 hover:scale-105 hover:border-mint hover:bg-mint/10 dark:border-zinc-700 dark:text-zinc-50 dark:hover:border-mint"
+                >
+                  {t.github}
+                </a>
+              </div>
             </div>
           </div>
         </section>
