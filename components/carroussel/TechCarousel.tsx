@@ -89,13 +89,12 @@ export default function TechCarousel({
         className="flex gap-6 overflow-hidden"
         style={{ scrollBehavior: "auto" }}
       >
-        {/* Duplicate items for seamless loop */}
         {[...techItems, ...techItems].map((fileName, index) => {
           const techName = fileName.replace(".png", "");
           return (
             <div
               key={index}
-              className="flex flex-shrink-0 items-center gap-3 rounded-lg border border-white/20 bg-white/10 px-6 py-3 backdrop-blur-sm"
+              className="flex shrink-0 items-center gap-3 rounded-lg border border-white/20 bg-white/10 px-6 py-3 backdrop-blur-sm"
             >
               <Image
                 src={`/tech_icons/${folder}/${fileName}`}

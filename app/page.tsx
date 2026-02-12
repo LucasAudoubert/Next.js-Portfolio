@@ -6,6 +6,7 @@ import TargetCursor from "@/components/TargetCursor";
 import LightRays from "@/components/background/LightRays";
 import { Separator } from "@/components/separator";
 import LogoLoop from "@/components/LogoLoop";
+import TextPressure from "@/components/TextPressure";
 import Image from "next/image";
 import { translations } from "@/lib/translations";
 import { progLanguages, tools } from "@/lib/techStack";
@@ -107,10 +108,8 @@ export default function Home() {
             />
           </div>
 
-          <div className="max-w-4xl text-center relative z-10">
-            <h1 className="mb-6 bg-linear-to-r from-mint to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
-              {t.title}
-            </h1>
+          <div className="max-w-full text-center relative z-10">
+            <TextPressure text={t.title} minFontSize={120} className="mb-6" />
             <p className="mb-8 animate-fade-in-up rounded-2xl bg-white/10 px-6 py-4 text-xl text-white backdrop-blur-md drop-shadow-md md:text-2xl">
               {t.subtitle}
             </p>
@@ -159,7 +158,7 @@ export default function Home() {
           <div className="absolute inset-0 z-0">
             <LightRays
               raysOrigin="top-center"
-              raysColor="#29ff9b"
+              raysColor="#FFFFFF"
               raysSpeed={0.8}
               lightSpread={1.5}
               rayLength={1.5}
@@ -180,7 +179,7 @@ export default function Home() {
             <h2 className="section-title mb-12 bg-gradient-to-r from-mint to-cyan-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
               {t.about}
             </h2>
-            <div className="space-y-6 text-lg text-zinc-700 dark:text-zinc-300">
+            <div className="space-y-6 text-lg text-zinc-300">
               <p className="leading-relaxed">{t.aboutText1}</p>
               <p className="leading-relaxed">{t.aboutText2}</p>
             </div>
@@ -223,20 +222,20 @@ export default function Home() {
                 }))}
                 speed={120}
                 direction="left"
-                logoHeight={40}
-                gap={32}
-                fadeOut={true}
+                logoHeight={60}
+                gap={48}
+                fadeOut={false}
                 pauseOnHover={true}
                 renderItem={(logo) => (
-                  <div className="flex flex-shrink-0 items-center gap-2">
+                  <div className="flex flex-shrink-0 items-center gap-3">
                     <Image
                       src={logo.path}
                       alt={logo.name}
-                      width={40}
-                      height={40}
-                      className="h-10 w-10"
+                      width={60}
+                      height={60}
+                      className="h-15 w-15"
                     />
-                    <span className="whitespace-nowrap text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                    <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
                       {logo.name}
                     </span>
                   </div>
@@ -258,20 +257,20 @@ export default function Home() {
                 }))}
                 speed={120}
                 direction="right"
-                logoHeight={40}
-                gap={32}
-                fadeOut={true}
+                logoHeight={60}
+                gap={48}
+                fadeOut={false}
                 pauseOnHover={true}
                 renderItem={(logo) => (
-                  <div className="flex flex-shrink-0 items-center gap-2">
+                  <div className="flex flex-shrink-0 items-center gap-3">
                     <Image
                       src={logo.path}
                       alt={logo.name}
-                      width={40}
-                      height={40}
-                      className="h-10 w-10"
+                      width={60}
+                      height={60}
+                      className="h-15 w-15"
                     />
-                    <span className="whitespace-nowrap text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                    <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
                       {logo.name}
                     </span>
                   </div>

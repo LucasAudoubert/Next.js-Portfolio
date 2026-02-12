@@ -1,3 +1,5 @@
+// DO NOT EVEN THINK TOUCHING A SINGLE THING HERE thx :')
+
 export const translations = {
   fr: {
     title: "Lucas Audoubert",
