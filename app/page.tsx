@@ -16,14 +16,19 @@ import ContactForm from "@/components/form/form";
 
 export default function Home() {
   const [language, setLanguage] = useState<"fr" | "en">("fr");
-  const flagRef = useRef(null);
-  const heroRef = useRef(null);
-  const aboutRef = useRef(null);
-  const projectsRef = useRef(null);
-  const contactRef = useRef(null);
-  const techRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const flagRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+  const techRef = useRef<HTMLElement>(null);
 
   const t = translations[language];
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleLanguageChange = () => {
     const animations = initializeAnimations();
@@ -33,6 +38,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (!isMounted) return;
     const animations = initializeAnimations();
 
     // Hero animation with stagger
@@ -52,11 +58,11 @@ export default function Home() {
 
     // Contact animation with bounce
     animations.contactAnimation(contactRef);
-  }, []);
+  }, [isMounted]);
 
   return (
     <div className="relative min-h-screen bg-zinc-900">
-      <TargetCursor />
+      {isMounted && <TargetCursor />}
 
       {/* Language Switch */}
       <div className="fixed left-6 top-6 z-50">
@@ -95,23 +101,25 @@ export default function Home() {
         >
           {/* Animated Background for Hero Only */}
           <div className="absolute inset-0 z-0">
-            <ColorBends
-              rotation={45}
-              speed={0.15}
-              colors={["#29ff9b", "#FF9FFC", "#66e0ff"]}
-              transparent
-              autoRotate={0}
-              scale={1}
-              frequency={1}
-              warpStrength={1}
-              mouseInfluence={1}
-              parallax={0.5}
-              noise={0.1}
-            />
+            {isMounted && (
+              <ColorBends
+                rotation={45}
+                speed={0.15}
+                colors={["#29ff9b", "#FF9FFC", "#66e0ff"]}
+                transparent
+                autoRotate={0}
+                scale={1}
+                frequency={1}
+                warpStrength={1}
+                mouseInfluence={1}
+                parallax={0.5}
+                noise={0.1}
+              />
+            )}
           </div>
 
           <div className="max-w-full text-center relative z-10">
-            <TextPressure text={t.title} minFontSize={120} className="mb-6" />
+            {isMounted && <TextPressure text={t.title} minFontSize={120} className="mb-6" />}
             <p className="mb-8 animate-fade-in-up rounded-2xl bg-white/10 px-6 py-4 text-xl text-white backdrop-blur-md drop-shadow-md md:text-2xl">
               {t.subtitle}
             </p>
@@ -158,19 +166,21 @@ export default function Home() {
         >
           {/* Light Rays Background */}
           <div className="absolute inset-0 z-0">
-            <LightRays
-              raysOrigin="top-center"
-              raysColor="#FFFFFF"
-              raysSpeed={0.8}
-              lightSpread={1.5}
-              rayLength={1.5}
-              pulsating={true}
-              fadeDistance={0.8}
-              saturation={0.9}
-              followMouse={true}
-              mouseInfluence={0.05}
-              noiseAmount={0.1}
-            />
+            {isMounted && (
+              <LightRays
+                raysOrigin="top-center"
+                raysColor="#FFFFFF"
+                raysSpeed={0.8}
+                lightSpread={1.5}
+                rayLength={1.5}
+                pulsating={true}
+                fadeDistance={0.8}
+                saturation={0.9}
+                followMouse={true}
+                mouseInfluence={0.05}
+                noiseAmount={0.1}
+              />
+            )}
           </div>
 
           {/* Decorative elements */}
@@ -217,32 +227,34 @@ export default function Home() {
                   ? "Langages & Frameworks"
                   : "Languages & Frameworks"}
               </h3>
-              <LogoLoop
-                logos={progLanguages.map((fileName) => ({
-                  name: fileName.replace(".png", ""),
-                  path: `/tech_icons/prog_language/${fileName}`,
-                }))}
-                speed={120}
-                direction="left"
-                logoHeight={60}
-                gap={48}
-                fadeOut={false}
-                pauseOnHover={true}
-                renderItem={(logo) => (
-                  <div className="flex flex-shrink-0 items-center gap-3">
-                    <Image
-                      src={logo.path}
-                      alt={logo.name}
-                      width={60}
-                      height={60}
-                      className="h-15 w-15"
-                    />
-                    <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
-                      {logo.name}
-                    </span>
-                  </div>
-                )}
-              />
+              {isMounted && (
+                <LogoLoop
+                  logos={progLanguages.map((fileName) => ({
+                    name: fileName.replace(".png", ""),
+                    path: `/tech_icons/prog_language/${fileName}`,
+                  }))}
+                  speed={120}
+                  direction="left"
+                  logoHeight={60}
+                  gap={48}
+                  fadeOut={false}
+                  pauseOnHover={true}
+                  renderItem={(logo) => (
+                    <div className="flex flex-shrink-0 items-center gap-3">
+                      <Image
+                        src={logo.path}
+                        alt={logo.name}
+                        width={60}
+                        height={60}
+                        className="h-15 w-15"
+                      />
+                      <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
+                        {logo.name}
+                      </span>
+                    </div>
+                  )}
+                />
+              )}
             </div>
 
             {/* Tools */}
@@ -252,19 +264,20 @@ export default function Home() {
                   ? "Outils & Technologies"
                   : "Tools & Technologies"}
               </h3>
-              <LogoLoop
-                logos={tools.map((fileName) => ({
-                  name: fileName.replace(".png", ""),
-                  path: `/tech_icons/tools/${fileName}`,
-                }))}
-                speed={120}
-                direction="right"
-                logoHeight={60}
-                gap={48}
-                fadeOut={false}
-                pauseOnHover={true}
-                renderItem={(logo) => (
-                  <div className="flex flex-shrink-0 items-center gap-3">
+              {isMounted && (
+                <LogoLoop
+                  logos={tools.map((fileName) => ({
+                    name: fileName.replace(".png", ""),
+                    path: `/tech_icons/tools/${fileName}`,
+                  }))}
+                  speed={120}
+                  direction="right"
+                  logoHeight={60}
+                  gap={48}
+                  fadeOut={false}
+                  pauseOnHover={true}
+                  renderItem={(logo) => (
+                    <div className="flex flex-shrink-0 items-center gap-3">
                     <Image
                       src={logo.path}
                       alt={logo.name}
@@ -278,6 +291,7 @@ export default function Home() {
                   </div>
                 )}
               />
+              )}
             </div>
           </div>
         </section>

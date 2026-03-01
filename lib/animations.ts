@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function initializeAnimations() {
   return {
-    heroAnimation: (heroRef: React.RefObject<HTMLElement>) => {
+    heroAnimation: (heroRef: React.RefObject<HTMLElement | null>) => {
       gsap.from(heroRef.current, {
         opacity: 0,
         y: 100,
@@ -14,7 +14,7 @@ export function initializeAnimations() {
       });
     },
 
-    aboutAnimation: (aboutRef: React.RefObject<HTMLElement>) => {
+    aboutAnimation: (aboutRef: React.RefObject<HTMLElement | null>) => {
       gsap.from(aboutRef.current, {
         opacity: 0,
         x: -100,
@@ -43,7 +43,7 @@ export function initializeAnimations() {
       });
     },
 
-    projectsAnimation: (projectsRef: React.RefObject<HTMLElement>) => {
+    projectsAnimation: (projectsRef: React.RefObject<HTMLElement | null>) => {
       gsap.from(".project-card", {
         opacity: 0,
         y: 100,
@@ -59,7 +59,7 @@ export function initializeAnimations() {
       });
     },
 
-    techCarouselAnimation: (techRef: React.RefObject<HTMLElement>) => {
+    techCarouselAnimation: (techRef: React.RefObject<HTMLElement | null>) => {
       gsap.from(".tech-carousel", {
         opacity: 0,
         scale: 0.9,
@@ -73,7 +73,7 @@ export function initializeAnimations() {
       });
     },
 
-    contactAnimation: (contactRef: React.RefObject<HTMLElement>) => {
+    contactAnimation: (contactRef: React.RefObject<HTMLElement | null>) => {
       gsap.from(contactRef.current, {
         opacity: 0,
         scale: 0.8,
@@ -88,7 +88,7 @@ export function initializeAnimations() {
     },
 
     languageSwitchAnimation: (
-      flagRef: React.RefObject<HTMLElement>,
+      flagRef: React.RefObject<HTMLDivElement | null>,
       language: "fr" | "en",
       onComplete: () => void,
     ) => {
