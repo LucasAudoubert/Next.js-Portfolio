@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { config } from "@/config";
 
-const resend = new Resend(config.resendApiKey);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: "Configuration manquante: RESEND_API_KEY" },
+        { status: 500 },
+      );
+    }
+
     const { name, email, message } = await request.json();
 
     // CHAMPS GTML RESQUIS
@@ -23,9 +29,13 @@ export async function POST(request: NextRequest) {
     }
 
     // ENVOIE MAIL RESEND
+    const contactEmail = process.env.CONTACT_EMAIL || "delivered@resend.dev";
+    const fromEmail =
+      process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
+
     const { data, error } = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>", // Remplacer par votre domaine vérifié
-      to: ["votre-email@exemple.com"], // Remplacer par votre email
+      from: fromEmail,
+      to: [contactEmail],
       replyTo: email,
       subject: `Nouveau message de ${name}`,
       html: `
@@ -43,9 +53,26 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Erreur Resend:", error);
+
+      const resendMessage =
+        typeof error.message === "string" && error.message.length > 0
+          ? error.message
+          : "Erreur lors de l'envoi de l'email";
+
+      if (error.statusCode === 403) {
+        return NextResponse.json(
+          {
+            error:
+              "Configuration Resend invalide. En mode test, utilisez 'from: onboarding@resend.dev' et envoyez uniquement vers votre propre email de compte Resend. Pour envoyer à d'autres adresses, vérifiez un domaine sur resend.com/domains et utilisez une adresse 'from' de ce domaine.",
+            details: resendMessage,
+          },
+          { status: 403 },
+        );
+      }
+
       return NextResponse.json(
-        { error: "Erreur lors de l'envoi de l'email" },
-        { status: 500 },
+        { error: resendMessage },
+        { status: typeof error.statusCode === "number" ? error.statusCode : 500 },
       );
     }
 

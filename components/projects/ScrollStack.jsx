@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 
 export const ScrollStackItem = ({ children, itemClassName = '' }) => (
   <div
-    className={`scroll-stack-card relative w-full h-80 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative w-full min-h-168 md:min-h-192 my-8 p-0 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: 'hidden',
       transformStyle: 'preserve-3d'
@@ -319,21 +319,26 @@ const ScrollStack = ({
         scrollBehavior: 'smooth',
         WebkitTransform: 'translateZ(0)',
         transform: 'translateZ(0)',
-        willChange: 'scroll-position'
+        willChange: 'scroll-position',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none'
       };
 
   const containerClassName = useWindowScroll
     ? `relative w-full ${className}`.trim()
-    : `relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim();
+    : `scroll-stack-no-scrollbar relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim();
 
   return (
-    <div className={containerClassName} ref={scrollerRef} style={containerStyles}>
-      <div className="scroll-stack-inner pt-[20vh] px-20 pb-[50rem] min-h-screen">
-        {children}
-        {/* Spacer so the last pin can release cleanly */}
-        <div className="scroll-stack-end w-full h-px" />
+    <>
+      <style>{`.scroll-stack-no-scrollbar::-webkit-scrollbar{display:none;}`}</style>
+      <div className={containerClassName} ref={scrollerRef} style={containerStyles}>
+        <div className="scroll-stack-inner pt-[20vh] px-20 pb-[50rem] min-h-screen">
+          {children}
+          {/* Spacer so the last pin can release cleanly */}
+          <div className="scroll-stack-end w-full h-px" />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

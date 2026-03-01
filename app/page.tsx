@@ -41,22 +41,16 @@ export default function Home() {
     if (!isMounted) return;
     const animations = initializeAnimations();
 
-    // Hero animation with stagger
     animations.heroAnimation(heroRef);
 
-    // About section animation with slide-in
     animations.aboutAnimation(aboutRef);
 
-    // Section titles animation
     animations.sectionTitlesAnimation();
 
-    // Projects animation with stagger and rotation
     animations.projectsAnimation(projectsRef);
 
-    // Tech carousel animation
     animations.techCarouselAnimation(techRef);
 
-    // Contact animation with bounce
     animations.contactAnimation(contactRef);
   }, [isMounted]);
 
@@ -99,7 +93,7 @@ export default function Home() {
           ref={heroRef}
           className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20 bg-[#1a1a1a]"
         >
-          {/* Animated Background for Hero Only */}
+          {/* Animated Background */}
           <div className="absolute inset-0 z-0">
             {isMounted && (
               <ColorBends
@@ -148,7 +142,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll indicator */}
+          {/* Scroll */}
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
             <div className="flex h-12 w-8 items-start justify-center rounded-full border-2 border-white/30 p-2">
               <div className="h-2 w-1 animate-pulse rounded-full bg-white"></div>
@@ -164,7 +158,7 @@ export default function Home() {
           className="relative overflow-hidden px-6 py-24 backdrop-blur-md"
           id="about"
         >
-          {/* Light Rays Background */}
+          {/* Light Rays */}
           <div className="absolute inset-0 z-0">
             {isMounted && (
               <LightRays
@@ -183,7 +177,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* Decorative elements */}
+          {/* Decors */}
           <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-mint/5 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-400/5 blur-3xl"></div>
 
@@ -215,14 +209,9 @@ export default function Home() {
             <h2 className="section-title mb-4 text-4xl font-bold text-white md:text-5xl">
               Tech Stack
             </h2>
-            <p className="text-lg text-white/90">
-              {language === "fr"
-                ? "Technologies que je maîtrise"
-                : "Technologies I master"}
-            </p>
           </div>
 
-          {/* Tech Stack with LogoLoop */}
+          {/* Tech Stack */}
           <div className="w-full space-y-12">
             {/* Programming Languages */}
             <div>
@@ -302,7 +291,7 @@ export default function Home() {
 
         <Separator />
 
-        {/* Projects Section with Scroll Stack */}
+        {/* Projects Section */}
         <div ref={projectsRef}>
           <ProjectsScroll language={language} />
         </div>

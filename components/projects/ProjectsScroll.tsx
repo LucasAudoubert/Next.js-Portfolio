@@ -54,7 +54,7 @@ export default function ProjectsScroll({ language }: ProjectsScrollProps) {
         </div>
 
         <div className="relative px-6 lg:px-12">
-          <h2 className="mb-20 bg-gradient-to-r from-mint via-cyan-400 to-mint bg-clip-text text-center text-5xl md:text-6xl font-black text-transparent">
+          <h2 className="mb-20 bg-linear-to-r from-mint via-cyan-400 to-mint bg-clip-text text-center text-5xl md:text-6xl font-black text-transparent">
             {t.projects}
           </h2>
 
@@ -77,63 +77,56 @@ export default function ProjectsScroll({ language }: ProjectsScrollProps) {
             >
               {t.projectsData.map((project, index) => (
                 <ScrollStackItem key={index}>
-                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl dark:bg-zinc-900/60 backdrop-blur-xl border border-white/10 dark:border-white/5 shadow-2xl">
+                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-zinc-900/60 backdrop-blur-xl border border-white/10 dark:border-white/5 shadow-2xl">
                     {/* Gradient overlay background */}
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/40 via-white/20 to-transparent dark:from-cyan-500/10 dark:via-mint/5 dark:to-transparent"></div>
+                    <div className="absolute inset-0 -z-10 bg-linear-to-br from-white/40 via-white/20 to-transparent dark:from-cyan-500/10 dark:via-mint/5 dark:to-transparent"></div>
 
                     {/* Grid pattern overlay */}
                     <div className="absolute inset-0 -z-10 opacity-0 dark:opacity-30 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect fill=%22none%22 stroke=%2229ff9b%22 stroke-width=%220.1%22 x=%220%22 y=%220%22 width=%2250%22 height=%2250%22/></svg>')]"></div>
 
                     {/* Content wrapper */}
-                    <div className="relative p-10 lg:p-12 h-full flex flex-col">
-                      {/* Top section with title and GitHub logo */}
-                      <div className="mb-10 flex items-start justify-between gap-6">
-                        <div className="flex-1">
-                          <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-zinc-900 via-mint to-cyan-400 dark:from-white dark:via-mint dark:to-cyan-400 bg-clip-text text-transparent mb-3">
-                            {project.title}
-                          </h3>
-                          <div className="h-1 w-24 bg-gradient-to-r from-mint to-cyan-400 rounded-full"></div>
-                        </div>
+                    <div className="relative flex h-full flex-col p-10 lg:p-12">
+                      {/* Giant decorative GitHub logo (overflow clipped by card) */}
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group absolute -right-24 -top-20 z-0 h-96 w-96 transition-all duration-700 hover:scale-105"
+                        title="View on GitHub"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-linear-to-r from-mint/30 to-cyan-400/30 blur-3xl opacity-40 group-hover:opacity-70 transition-opacity duration-700"></div>
+                        <Image
+                          src="/images/GitHub-Logo.png"
+                          alt="GitHub"
+                          fill
+                          className="object-contain opacity-20 drop-shadow-2xl transition-all duration-700 group-hover:opacity-35 group-hover:rotate-3"
+                          priority
+                        />
+                      </a>
 
-                        {/* Large GitHub Logo - No Frame */}
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative flex-shrink-0 group transition-all duration-500"
-                          title="View on GitHub"
-                        >
-                          <div className="relative h-32 w-32 opacity-90 group-hover:opacity-100 transition-opacity">
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-mint to-cyan-400 rounded-2xl blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
-
-                            {/* Logo */}
-                            <Image
-                              src="/images/GitHub-Logo.png"
-                              alt="GitHub"
-                              fill
-                              className="object-contain drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-1"
-                              priority
-                            />
-                          </div>
-                        </a>
+                      {/* Top section with title */}
+                      <div className="relative z-10 mb-10 max-w-3xl">
+                        <h3 className="mb-3 bg-linear-to-r from-white via-mint to-cyan-400 bg-clip-text text-4xl font-black text-transparent md:text-5xl">
+                          {project.title}
+                        </h3>
+                        <div className="h-1 w-24 rounded-full bg-linear-to-r from-mint to-cyan-400"></div>
                       </div>
 
                       {/* Description */}
-                      <p className="mb-8 text-lg lg:text-xl leading-relaxed text-zinc-600 dark:text-zinc-300 font-light">
+                      <p className="relative z-10 mb-8 text-lg leading-relaxed text-white/90 font-light lg:text-xl max-w-3xl">
                         {project.description}
                       </p>
 
                       {/* Tech Stack with Icons */}
-                      <div className="mb-8 space-y-3">
-                        <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      <div className="relative z-10 mb-8 space-y-3 max-w-3xl">
+                        <p className="text-xs font-bold uppercase tracking-wider text-white/70">
                           Technologies
                         </p>
                         <div className="flex flex-wrap gap-3">
                           {project.tech.map((tech, i) => (
                             <div
                               key={i}
-                              className="group flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm bg-gradient-to-r from-white/50 to-white/30 dark:from-white/15 dark:to-white/5 text-zinc-900 dark:text-white backdrop-blur-md border border-white/30 dark:border-white/10 transition-all duration-300 hover:border-mint/50 hover:shadow-lg hover:scale-105"
+                              className="group flex items-center gap-2 rounded-xl border border-white/20 bg-linear-to-r from-white/15 to-white/5 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-mint/50 hover:shadow-lg"
                             >
                               <span className="relative h-4 w-4">
                                 <svg
@@ -155,13 +148,13 @@ export default function ProjectsScroll({ language }: ProjectsScrollProps) {
                       </div>
 
                       {/* Footer action - Enhanced CTA */}
-                      <div className="mt-auto pt-8 border-t border-white/10 dark:border-white/5 flex items-center justify-between gap-6">
+                      <div className="relative z-10 mt-auto flex items-center justify-between gap-6 border-t border-white/10 pt-8 dark:border-white/5">
                         <div className="space-y-1">
                           <div className="text-xs font-bold uppercase tracking-widest text-mint/80">
                             Project {String(index + 1).padStart(2, "0")} /{" "}
                             {String(t.projectsData.length).padStart(2, "0")}
                           </div>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                          <p className="text-xs text-white/70">
                             Click to explore and contribute
                           </p>
                         </div>
@@ -169,10 +162,10 @@ export default function ProjectsScroll({ language }: ProjectsScrollProps) {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-mint to-cyan-400 text-white font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:shadow-2xl hover:shadow-mint/50 hover:scale-110 hover:-translate-y-1 overflow-hidden"
+                          className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-linear-to-r from-mint to-cyan-400 text-white font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:shadow-2xl hover:shadow-mint/50 hover:scale-110 hover:-translate-y-1 overflow-hidden"
                         >
                           {/* Background shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
+                          <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
 
                           {/* Content */}
                           <span className="relative z-10">View Repository</span>
