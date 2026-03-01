@@ -1,13 +1,27 @@
-import { Roboto } from "next/font/google";
+import localFont from "next/font/local";
 
-export const roboto400 = Roboto({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--roboto400",
-});
-
-export const roboto700 = Roboto({
-  subsets: ["latin"],
-  weight: "700",
-  variable: "--roboto700",
+export const clashDisplay = localFont({
+  src: [
+    {
+      path: "../public/font/ClashGrotesk-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/font/ClashGrotesk-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/font/ClashGrotesk-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/font/ClashGrotesk-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--clash-display",
 });
