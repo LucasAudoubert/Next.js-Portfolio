@@ -11,6 +11,7 @@ import Image from "next/image";
 import { translations } from "@/lib/translations";
 import { progLanguages, tools } from "@/lib/techStack";
 import { initializeAnimations } from "@/lib/animations";
+import ProjectsScroll from "@/components/projects/ProjectsScroll";
 
 export default function Home() {
   const [language, setLanguage] = useState<"fr" | "en">("fr");
@@ -282,58 +283,10 @@ export default function Home() {
 
         <Separator />
 
-        {/* Projects Section */}
-        <section
-          ref={projectsRef}
-          className="relative overflow-hidden bg-white/90 px-6 py-24 backdrop-blur-md dark:bg-zinc-950/90"
-          id="projects"
-        >
-          {/* Decorative elements */}
-          <div className="absolute right-0 top-0 h-96 w-96 -translate-y-1/4 translate-x-1/4 rounded-full bg-cyan-400/5 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/4 translate-y-1/4 rounded-full bg-mint/5 blur-3xl"></div>
-
-          <div className="relative mx-auto max-w-6xl">
-            <h2 className="mb-16 bg-gradient-to-r from-mint via-cyan-400 to-mint bg-clip-text text-center text-4xl font-bold text-transparent md:text-5xl">
-              {t.projects}
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {t.projectsData.map((project, index) => (
-                <div
-                  key={index}
-                  className="project-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-100 to-white p-8 shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl dark:from-zinc-900 dark:to-zinc-800"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-mint/0 via-mint/10 to-cyan-400/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-                  <div className="relative">
-                    <h3 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                      {project.title}
-                    </h3>
-                    <p className="mb-6 text-zinc-600 dark:text-zinc-400">
-                      {project.description}
-                    </p>
-                    <div className="mb-6 flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="rounded-full bg-mint/20 px-3 py-1 text-sm font-medium text-zinc-900 dark:text-zinc-50"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center font-semibold text-zinc-900 transition-colors hover:text-mint dark:text-zinc-50 dark:hover:text-mint"
-                    >
-                      {t.viewOnGithub}
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Projects Section with Scroll Stack */}
+        <div ref={projectsRef}>
+          <ProjectsScroll language={language} />
+        </div>
 
         <Separator />
 
