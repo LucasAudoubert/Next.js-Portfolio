@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   try {
     const { name, email, message } = await request.json();
 
-    // Validation des champs
+    // CHAMPS GTML RESQUIS
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Tous les champs sont requis" },
@@ -16,13 +16,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validation de l'email
+    // EMAIL VALID
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: "Email invalide" }, { status: 400 });
     }
 
-    // Envoi de l'email avec Resend
+    // ENVOIE MAIL RESEND
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>", // Remplacer par votre domaine vérifié
       to: ["votre-email@exemple.com"], // Remplacer par votre email

@@ -73,6 +73,7 @@ export default function ProjectsScroll({ language }: ProjectsScrollProps) {
               stackPosition="30%"
               scaleEndPosition="20%"
               className="w-full"
+              onStackComplete={() => {}}
             >
               {t.projectsData.map((project, index) => (
                 <ScrollStackItem key={index}>

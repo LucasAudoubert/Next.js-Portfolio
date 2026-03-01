@@ -202,16 +202,20 @@ export default function Home() {
 
         <section
           ref={techRef}
-          className="relative min-h-48 overflow-hidden bg-zinc-50/80 px-6 py-24 backdrop-blur-md dark:bg-zinc-900/80 flex flex-col items-center justify-center"
+          className="relative min-h-48 overflow-hidden px-6 py-24 flex flex-col items-center justify-center bg-white/10 dark:bg-white/5 backdrop-blur-2xl border-y border-white/20 dark:border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-1px_0_rgba(255,255,255,0.08)]"
           id="tech"
         >
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/20 via-white/5 to-transparent dark:from-white/10 dark:via-white/5 dark:to-transparent"></div>
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.28)_1px,transparent_0)] bg-size-[14px_14px] opacity-20"></div>
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-white/25 to-transparent"></div>
+
           <div className="absolute left-0 top-0 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mint/5 blur-3xl"></div>
 
           <div className="mx-auto mb-12 max-w-4xl text-center">
-            <h2 className="section-title mb-4 bg-gradient-to-r from-cyan-400 to-mint bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
+            <h2 className="section-title mb-4 text-4xl font-bold text-white md:text-5xl">
               Tech Stack
             </h2>
-            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="text-lg text-white/90">
               {language === "fr"
                 ? "Technologies que je maîtrise"
                 : "Technologies I master"}
@@ -222,7 +226,7 @@ export default function Home() {
           <div className="w-full space-y-12">
             {/* Programming Languages */}
             <div>
-              <h3 className="mb-6 text-center text-lg font-semibold text-zinc-700 dark:text-zinc-300">
+              <h3 className="mb-6 text-center text-lg font-semibold text-white">
                 {language === "fr"
                   ? "Langages & Frameworks"
                   : "Languages & Frameworks"}
@@ -248,7 +252,7 @@ export default function Home() {
                         height={60}
                         className="h-15 w-15"
                       />
-                      <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
+                      <span className="whitespace-nowrap text-base font-medium text-white/90">
                         {logo.name}
                       </span>
                     </div>
@@ -259,7 +263,7 @@ export default function Home() {
 
             {/* Tools */}
             <div>
-              <h3 className="mb-6 text-center text-lg font-semibold text-zinc-700 dark:text-zinc-300">
+              <h3 className="mb-6 text-center text-lg font-semibold text-white">
                 {language === "fr"
                   ? "Outils & Technologies"
                   : "Tools & Technologies"}
@@ -285,7 +289,7 @@ export default function Home() {
                       height={60}
                       className="h-15 w-15"
                     />
-                    <span className="whitespace-nowrap text-base font-medium text-zinc-600 dark:text-zinc-400">
+                    <span className="whitespace-nowrap text-base font-medium text-white/90">
                       {logo.name}
                     </span>
                   </div>
