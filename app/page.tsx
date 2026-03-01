@@ -12,6 +12,7 @@ import { translations } from "@/lib/translations";
 import { progLanguages, tools } from "@/lib/techStack";
 import { initializeAnimations } from "@/lib/animations";
 import ProjectsScroll from "@/components/projects/ProjectsScroll";
+import ContactForm from "@/components/form/form";
 
 export default function Home() {
   const [language, setLanguage] = useState<"fr" | "en">("fr");
@@ -290,43 +291,7 @@ export default function Home() {
 
         <Separator />
 
-        {/* Contact Section */}
-        <section
-          ref={contactRef}
-          className="relative overflow-hidden bg-zinc-50/90 px-6 py-24 backdrop-blur-md dark:bg-zinc-900/90"
-          id="contact"
-        >
-          {/* Decorative elements */}
-          <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mint/5 blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 h-64 w-64 translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-400/5 blur-3xl"></div>
-
-          <div className="relative mx-auto max-w-4xl text-center">
-            <h2 className="mb-8 bg-gradient-to-r from-cyan-400 via-mint to-cyan-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
-              {t.contact}
-            </h2>
-            <p className="mb-12 text-xl text-zinc-600 dark:text-zinc-400">
-              {t.contactText}
-            </p>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a
-                  href="mailto:lucas.audoubert.dev@gmail.com"
-                  className="group relative overflow-hidden rounded-full bg-gradient-to-r from-mint to-cyan-400 px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                >
-                  <span className="relative z-10">{t.sendEmail}</span>
-                </a>
-                <a
-                  href="https://github.com/LucasAudoubert"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full border-2 border-zinc-300 px-8 py-4 font-semibold text-zinc-900 transition-all duration-300 hover:scale-105 hover:border-mint hover:bg-mint/10 dark:border-zinc-700 dark:text-zinc-50 dark:hover:border-mint"
-                >
-                  {t.github}
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactForm />
 
         {/* Footer */}
         <footer className="border-t border-zinc-200/30 bg-white/80 px-6 py-8 backdrop-blur-sm dark:border-zinc-800/30 dark:bg-zinc-900/80">
