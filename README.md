@@ -94,6 +94,31 @@ IIM_A2CDI_Nextjs-main/
 - Mise en page entièrement responsive pour tous les appareils.
 - Optimisé pour les performances et l'accessibilité.
 
+### Section Projets (Scroll Stack)
+
+- Cartes projets en **scroll stack** avec effet glass/futuriste.
+- Grand logo GitHub décoratif qui déborde de la carte avec découpe propre (`overflow-hidden`).
+- Lisibilité renforcée du contenu des cartes (titre, description, stack technique).
+- Barre de scroll native masquée dans la zone projets (scroll toujours actif).
+
+### Traductions FR/EN
+
+- Synchronisation des données de projets entre les versions française et anglaise.
+- Contenus traduits projet par projet dans `lib/translations.ts`.
+
+---
+
+### Mode test (rapide)
+
+- `RESEND_FROM_EMAIL` doit rester sur `onboarding@resend.dev`.
+- `CONTACT_EMAIL` doit être l'email propriétaire du compte Resend.
+
+### Mode production
+
+- Vérifier un domaine dans Resend (`resend.com/domains`).
+- Utiliser une adresse `from` du domaine vérifié, par exemple :
+   `Portfolio Contact <contact@portfolio.lucas.dev>`.
+
 ---
 
 ## 📦 Scripts Disponibles
